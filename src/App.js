@@ -3,9 +3,10 @@ import "./App.css";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import DataState from "./context/data/DataState";
+import Home from "./components/cards/Home";
 
 const App = () => {
-  
+
   useEffect(() => {
     //Initialise the Materialize JS
     M.AutoInit();
@@ -14,7 +15,7 @@ const App = () => {
 
   return (
     <DataState>
-      <div className="App"></div>
+      <Home />
     </DataState>
   );
 };
