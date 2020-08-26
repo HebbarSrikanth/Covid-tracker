@@ -6,6 +6,7 @@ export default (state, action) => {
       return {
         ...state,
         covidTotal: action.payload,
+        loading: false,
       };
 
     case type.SET_ERROR:

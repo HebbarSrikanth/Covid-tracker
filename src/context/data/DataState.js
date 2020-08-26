@@ -9,12 +9,14 @@ const DataState = (props) => {
     covidTotal: "",
     selectedCountry: null,
     error: null,
+    loading: null,
   };
 
   const [state, dispatch] = useReducer(DataReducer, initialState);
 
   const fetchData = async () => {
     try {
+      state.loading = true;
       const res = await Axios.get("https://covid19.mathdro.id/api/");
 
       dispatch({
@@ -36,6 +38,7 @@ const DataState = (props) => {
         data: state.covidTotal,
         selectedCountry: state.selectedCountry,
         fetchData,
+        loading: state.loading,
       }}
     >
       {props.children}

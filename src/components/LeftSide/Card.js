@@ -16,6 +16,10 @@ const Card = () => {
 
   return data !== "" ? (
     <div className="row">
+      <div style={{ textAlign: "center", margin: "2% auto" }}>
+        {data.lastUpdate}
+      </div>
+
       <CardInfo
         title="Confirmed"
         fontType="red-text"
