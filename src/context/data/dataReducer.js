@@ -7,6 +7,12 @@ export default (state, action) => {
         ...state,
         covidTotal: action.payload,
       };
+
+    case type.SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
