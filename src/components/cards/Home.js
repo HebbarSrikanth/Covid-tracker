@@ -1,5 +1,6 @@
 import React from 'react'
 import Cases from './Cases'
+import Charts from '../charts/Charts'
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
                 <Cases />
             </div>
             <div className='col s6'>
-                Second Half of the page
+                <Charts />
             </div>
         </div>
     )
