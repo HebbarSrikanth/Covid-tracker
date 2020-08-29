@@ -5,7 +5,7 @@ export default (state, action) => {
     case type.FETCH_DATA:
       return {
         ...state,
-        covidTotal: action.payload,
+        worldCasesInfo: action.payload,
         loading: false,
       };
 
@@ -14,6 +14,12 @@ export default (state, action) => {
         ...state,
         error: action.payload,
       };
+
+    case type.SET_COUNTRYWISEDATA:
+      return {
+        ...state,
+        countryWiseCases: action.payload
+      }
     default:
       return state;
   }

@@ -6,22 +6,31 @@ import Axios from "axios";
 
 const DataState = (props) => {
   const initialState = {
-    covidTotal: "",
+    worldCasesInfo: '',
     selectedCountry: null,
+    countryWiseCases: null,
     error: null,
     loading: null,
   };
 
   const [state, dispatch] = useReducer(DataReducer, initialState);
 
-  const fetchData = async () => {
+  const fetchData = async (country = '') => {
+
+    console.log(country)
+    let link = ''
+    if (country === '')
+      link = 'https://disease.sh/v3/covid-19/all'
+    else
+      link = 'https://disease.sh/v3/covid-19/countries/' + country
+
     try {
       state.loading = true;
-      const res = await Axios.get("https://covid19.mathdro.id/api/");
+      const res = (await Axios.get(link)).data
 
       dispatch({
         type: type.FETCH_DATA,
-        payload: res.data,
+        payload: res
       });
     } catch (err) {
       console.log(err);
@@ -32,13 +41,32 @@ const DataState = (props) => {
     }
   };
 
+  const fetchCountryAllWiseData = async () => {
+    try {
+      const data = (await Axios.get('https://disease.sh/v3/covid-19/countries')).data
+      dispatch({
+        type: type.SET_COUNTRYWISEDATA,
+        payload: data
+      })
+
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: type.SET_ERROR,
+        payload: err,
+      });
+    }
+  }
+
   return (
     <DataContext.Provider
       value={{
-        data: state.covidTotal,
+        data: state.worldCasesInfo,
         selectedCountry: state.selectedCountry,
-        fetchData,
+        countryData: state.countryWiseCases,
         loading: state.loading,
+        fetchData,
+        fetchCountryAllWiseData
       }}
     >
       {props.children}

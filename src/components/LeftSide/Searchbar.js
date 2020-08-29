@@ -1,31 +1,45 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import DataContext from "../../context/data/dataContext";
 
 const Searchbar = () => {
-  const searchBoxStyle = {
-    width: "50%",
-    margin: "5% auto",
-    boxShadow: "2px 5px 20px rgba(0,0,0,.1)",
-    color: "#6c757d",
-    height: "3em",
-    borderRadius: "5%",
-    background: "white",
-  };
+
+  const dataContext = useContext(DataContext)
+  const { fetchCountryAllWiseData, countryData, fetchData } = dataContext
+
+  const [selectedCountry, setCountry] = useState('')
+
+  useEffect(() => {
+    fetchCountryAllWiseData()
+    //eslint-disable-next-line
+  }, [])
+
+  const optionList = (countryData !== null) &&
+    (
+      countryData.map((data, id) =>
+        <option key={id} value={data.country}>{data.country}</option>)
+    )
+
+  const onChangeHandler = (e) => {
+    setCountry(e.target.value)
+    fetchData(e.target.value)
+  }
 
   return (
-    <div className="nav-wrapper" style={searchBoxStyle}>
-      <div className="input-field" style={{ padding: "10px" }}>
-        <input id="search" type="search" placeholder="Search Country..." />
-        <label
-          className="label-icon"
-          style={{ margin: "10px" }}
-          htmlFor="search"
-        >
-          <i className="material-icons">search</i>
-        </label>
-        <i className="material-icons">close</i>
+    <div className='row'>
+      <div className="input-field s6" style={searchBoxStyle}>
+        <select className='browser-default' value={selectedCountry} onChange={onChangeHandler}>
+          <option value="" disabled>Worldwide</option>
+          {optionList}
+        </select>
       </div>
     </div>
+
   );
+};
+
+const searchBoxStyle = {
+  width: "50%",
+  margin: "5% auto"
 };
 
 export default Searchbar;
