@@ -7,7 +7,7 @@ import Axios from "axios";
 const DataState = (props) => {
   const initialState = {
     worldCasesInfo: '',
-    selectedCountry: null,
+    historicalData: null,
     countryWiseCases: null,
     error: null,
     loading: null,
@@ -41,9 +41,9 @@ const DataState = (props) => {
     }
   };
 
-  const fetchCountryAllWiseData = async () => {
+  const fetchCountryWiseData = async () => {
     try {
-      const data = (await Axios.get('https://disease.sh/v3/covid-19/countries')).data
+      const data = (await Axios.get('https://disease.sh/v3/covid-19/countries?sort=cases')).data
       dispatch({
         type: type.SET_COUNTRYWISEDATA,
         payload: data
@@ -58,15 +58,37 @@ const DataState = (props) => {
     }
   }
 
+  const fetchHistoricData = async (country = '') => {
+    let url = 'https://disease.sh/v3/covid-19/historical/'
+    if (country === '')
+      url = url + 'all?lastdays=30'
+    else
+      url = url + country + '?lastdays=30'
+    try {
+      let data = (await Axios.get(url)).data
+      dispatch({
+        type: type.FETCH_HISTORICDATA,
+        payload: data
+      })
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: type.SET_ERROR,
+        payload: err,
+      });
+    }
+  }
+
   return (
     <DataContext.Provider
       value={{
         data: state.worldCasesInfo,
-        selectedCountry: state.selectedCountry,
+        historicalData: state.historicalData,
         countryData: state.countryWiseCases,
         loading: state.loading,
         fetchData,
-        fetchCountryAllWiseData
+        fetchCountryWiseData,
+        fetchHistoricData
       }}
     >
       {props.children}

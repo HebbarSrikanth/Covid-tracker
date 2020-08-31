@@ -4,12 +4,12 @@ import DataContext from "../../context/data/dataContext";
 const Searchbar = () => {
 
   const dataContext = useContext(DataContext)
-  const { fetchCountryAllWiseData, countryData, fetchData } = dataContext
+  const { fetchCountryWiseData, countryData, fetchData } = dataContext
 
   const [selectedCountry, setCountry] = useState('')
 
   useEffect(() => {
-    fetchCountryAllWiseData()
+    fetchCountryWiseData()
     //eslint-disable-next-line
   }, [])
 
@@ -28,7 +28,7 @@ const Searchbar = () => {
     <div className='row'>
       <div className="input-field s6" style={searchBoxStyle}>
         <select className='browser-default' value={selectedCountry} onChange={onChangeHandler}>
-          <option value="" disabled>Worldwide</option>
+          <option value="">Worldwide</option>
           {optionList}
         </select>
       </div>

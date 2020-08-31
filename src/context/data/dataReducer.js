@@ -20,6 +20,12 @@ export default (state, action) => {
         ...state,
         countryWiseCases: action.payload
       }
+
+    case type.FETCH_HISTORICDATA:
+      return {
+        ...state,
+        historicalData: action.payload
+      }
     default:
       return state;
   }

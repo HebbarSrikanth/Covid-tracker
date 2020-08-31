@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import DataContext from "../../context/data/dataContext";
 import CardInfo from "./CardInfo";
+import Preloading from "../Layouts/Preloading";
 
 const Card = () => {
   //Import necessary values from the Context
@@ -31,7 +32,7 @@ const Card = () => {
       <CardInfo title="Deceased" fontType="grey-text" casesNumber={deaths} todayData={todayDeaths} />
 
     </div>
-  ) : null;
+  ) : <Preloading />;
 };
 
 export default Card;
