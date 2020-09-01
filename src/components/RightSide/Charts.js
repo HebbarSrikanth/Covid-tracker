@@ -9,6 +9,12 @@ const Charts = () => {
 
     let linedata = {}
 
+    const values = {
+        label: 'Confirmed Cases',
+        color: 'rgba(255,0,0,0.5)',
+        borderColor: 'rgba(255,0,0,0.2)'
+    }
+
     useEffect(() => {
         fetchHistoricData()
         //eslint-disable-next-line
@@ -19,20 +25,25 @@ const Charts = () => {
         linedata = {
             labels: Object.keys(cases),
             datasets: [{
-                label: 'Cases',
+                label: values.label,
                 data: Object.keys(cases).map((key) => cases[key]),
                 fill: false,
-                borderColor: 'red'
+                borderColor: values.borderColor,
+                pointBackgroundColor: values.color,
+                pointRadius: '1.5',
+                borderJoinStyle: 'miter',
+                borderWidth: 4
             }]
         }
     }
 
 
     return (
-        <div>
+        <div style={{ margin: 'left', width: '50%' }}>
             <Line
                 data={linedata}
                 options={lineChartOptions}
+                maintainAspectRatio={true}
             />
         </div>
     )
@@ -43,21 +54,48 @@ const lineChartOptions = {
         yAxes: [{
             stacked: true,
             position: 'right',
+            gridLines: {
+                display: true,
+                lineWidth: 0,
+                zeroLineWidth: 2,
+                zeroLineColor: 'rgba(255,0,0,0.5)',
+            },
             ticks: {
-                callback: function (label) {
-                    return label / 100000 + 'k';
-                }
+                fontColor: 'rgba(255,0,0,0.5)',
+                fontFamily: 'Ubuntu',
+                beginAtZero: true
             }
         }],
         xAxes: [{
             stacked: true,
             type: 'time',
-            time: { unit: 'week' }
-        }]
+            position: 'right',
+            time: { unit: 'week' },
+            gridLines: {
+                display: true,
+                lineWidth: 0,
+                zeroLineWidth: 2,
+                zeroLineColor: 'rgba(255,0,0,0.5)',
+            },
+            ticks: {
+                fontColor: 'rgba(255,0,0,0.5)',
+                fontFamily: 'Ubuntu',
+            }
+        }],
+
     },
     legend: {
-        display: false
-    }
+        display: true,
+        labels: {
+            fontColor: 'rgba(255,0,0,0.5)',
+            boxWidth: 0,
+            fontSize: 20,
+            fontFamily: 'Ubuntu',
+            padding: 20
+        },
+        align: 'start'
+    },
+    maintainAspectRatio: true
 }
 
 export default Charts
