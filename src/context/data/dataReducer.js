@@ -26,6 +26,12 @@ export default (state, action) => {
         ...state,
         historicalData: action.payload
       }
+
+    case type.SET_COUNTRY:
+      return {
+        ...state,
+        country: action.payload
+      }
     default:
       return state;
   }

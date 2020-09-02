@@ -9,6 +9,7 @@ const DataState = (props) => {
     worldCasesInfo: '',
     historicalData: null,
     countryWiseCases: null,
+    country: '',
     error: null,
     loading: null,
   };
@@ -66,10 +67,18 @@ const DataState = (props) => {
       url = url + country + '?lastdays=30'
     try {
       let data = (await Axios.get(url)).data
-      dispatch({
-        type: type.FETCH_HISTORICDATA,
-        payload: data
-      })
+      if (country === '') {
+        dispatch({
+          type: type.FETCH_HISTORICDATA,
+          payload: data
+        })
+      }
+      else {
+        dispatch({
+          type: type.FETCH_HISTORICDATA,
+          payload: data.timeline
+        })
+      }
     } catch (err) {
       console.log(err);
       dispatch({
@@ -79,6 +88,13 @@ const DataState = (props) => {
     }
   }
 
+  const setSelectedCountry = (country) => {
+    dispatch({
+      type: type.SET_COUNTRY,
+      payload: country
+    })
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -86,9 +102,11 @@ const DataState = (props) => {
         historicalData: state.historicalData,
         countryData: state.countryWiseCases,
         loading: state.loading,
+        country: state.country,
         fetchData,
         fetchCountryWiseData,
-        fetchHistoricData
+        fetchHistoricData,
+        setSelectedCountry
       }}
     >
       {props.children}

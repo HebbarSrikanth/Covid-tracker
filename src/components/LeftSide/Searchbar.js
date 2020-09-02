@@ -4,7 +4,7 @@ import DataContext from "../../context/data/dataContext";
 const Searchbar = () => {
 
   const dataContext = useContext(DataContext)
-  const { fetchCountryWiseData, countryData, fetchData } = dataContext
+  const { fetchCountryWiseData, countryData, fetchData, setSelectedCountry } = dataContext
 
   const [selectedCountry, setCountry] = useState('')
 
@@ -22,6 +22,7 @@ const Searchbar = () => {
   const onChangeHandler = (e) => {
     setCountry(e.target.value)
     fetchData(e.target.value)
+    setSelectedCountry(e.target.value)
   }
 
   return (
